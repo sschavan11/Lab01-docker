@@ -35,6 +35,7 @@ Lab01-docker/
 - LogisticRegression (max_iter=5000, solver='lbfgs')
 
 ### Output
+
 After successful training:
 
 ```
@@ -56,32 +57,29 @@ wine_model.pkl
 python:3.10
 ```
 
-### Dockerfile Explanation
+### Recommended Dockerfile
 
 ```dockerfile
 FROM python:3.10
-```
-Uses official Python runtime.
 
-```dockerfile
 WORKDIR /app
-```
-Sets working directory inside container.
 
-```dockerfile
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY src/ .
-```
-Copies ML script into container.
 
-```dockerfile
-RUN pip install -r requirements.txt
-```
-Installs required dependencies.
-
-```dockerfile
 CMD ["python", "main.py"]
 ```
-Runs training script when container starts.
+
+### Dockerfile Explanation
+
+- **FROM python:3.10** → Uses official Python runtime  
+- **WORKDIR /app** → Sets working directory inside container  
+- **COPY requirements.txt .** → Copies dependency file first (improves caching)  
+- **RUN pip install -r requirements.txt** → Installs required dependencies  
+- **COPY src/ .** → Copies ML script into container  
+- **CMD ["python", "main.py"]** → Runs training script when container starts  
 
 ---
 
@@ -109,10 +107,10 @@ docker build -t lab1:v1 .
 ### 2️⃣ Run Container
 
 ```bash
-docker run lab1:v1
+docker run --rm lab1:v1
 ```
 
-Expected output:
+### Expected Output
 
 ```
 The model training was successful (Wine + Logistic Regression)
@@ -120,17 +118,31 @@ The model training was successful (Wine + Logistic Regression)
 
 ---
 
-### 3️⃣ Save Docker Image as TAR
+### 3️⃣ Save Model to Local Machine (Optional)
+
+To save `wine_model.pkl` to your local folder:
+
+**PowerShell (Windows):**
+
+```powershell
+docker run --rm -v ${PWD}:/app lab1:v1
+```
+
+After running this command, `wine_model.pkl` will appear in your local directory.
+
+---
+
+### 4️⃣ Save Docker Image as TAR
 
 ```bash
 docker save lab1:v1 > my_image.tar
 ```
 
-This exports the Docker image for portability.
+This exports the Docker image for portability and sharing.
 
 ---
 
-## 🔍 Verify
+## 🔍 Verify Docker Setup
 
 List images:
 ```bash
@@ -142,18 +154,44 @@ List running containers:
 docker ps
 ```
 
+List all containers (including stopped):
+```bash
+docker ps -a
+```
+
 ---
 
 ## 🎯 Key Concepts Demonstrated
 
-- Dockerfile creation
-- Image building
-- Container execution
-- Reproducible ML environments
-- Dependency isolation
-- Model serialization with joblib
+- Dockerfile creation  
+- Image building  
+- Container execution  
+- Reproducible ML environments  
+- Dependency isolation  
+- Volume mounting  
+- Model serialization with joblib  
 
 ---
+
+## 🔬 Reproducibility
+
+This project demonstrates how Docker ensures:
+
+- Environment consistency  
+- Cross-machine portability  
+- Dependency isolation  
+- Reproducible ML pipelines  
+
+The same image can be run on any system with Docker installed without additional configuration.
+
+---
+
+## 👤 Author
+
+Saheel Chavan  
+MLOps – Northeastern University  
+Spring 2026
+
 
 ## 👤 Author
 
