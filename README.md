@@ -162,4 +162,5 @@ MLOps – Northeastern University
 Spring 2026
 
 Ran the above command sucessfully
-![alt text](image.png)
+<img width="1200" height="225" alt="image" src="https://github.com/user-attachments/assets/e5bead6e-2ec9-4e7a-abbe-6dd93cd4ae1d" />
+
