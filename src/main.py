@@ -6,7 +6,7 @@ from sklearn.pipeline import make_pipeline
 import joblib
 
 if __name__ == "__main__":
-    # Load Wine dataset (different from Iris)
+    # Load Wine dataset 
     wine = load_wine()
     X, y = wine.data, wine.target
 
